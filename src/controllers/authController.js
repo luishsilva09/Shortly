@@ -1,5 +1,5 @@
 import connection from "../dbStrategy/postgres.js";
-export async function signup(req,res){
+export async function signUp(req,res){
     try{
         let teste = await connection.query('SELECT * FROM users')
         res.send(teste)
@@ -9,7 +9,7 @@ export async function signup(req,res){
       }
 }
 
-export async function signin(req,res){
+export async function signIn(req,res){
     try{
         res.send('signin')
     }catch (error) {
