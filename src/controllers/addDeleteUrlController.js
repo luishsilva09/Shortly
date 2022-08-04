@@ -1,5 +1,6 @@
 import connection from "../dbStrategy/postgres.js";
 import { nanoid } from 'nanoid'
+
 export async function addShortUrl(req,res){
     try{
         const {rows: session} = res.locals.session
@@ -21,7 +22,8 @@ export async function addShortUrl(req,res){
 
 export async function deleteShortUrl(req,res){
     try{
-        res.send("delete")
+        const {rows: session} = res.locals.session
+        res.send(session)
     }catch (error) {
         console.log(error);
         res.sendStatus(500);
