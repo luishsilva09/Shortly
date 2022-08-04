@@ -10,7 +10,6 @@ export async function newUserValid(req,res,next){
     }
     const {rowCount: existUser} =await connection.query(`SELECT * FROM users WHERE users.email =$1`,[newUser.email])
     if(existUser > 0){
-        console.log(existUser)
         return res.sendStatus(409)
     }
     next()
