@@ -3,18 +3,13 @@ import pg from 'pg';
 
 const { Pool } = pg;
 
-const user = 'luishenrique';
-const password = '3301';
-const host = 'localhost';
-const port = 5050;
-const database = 'shortly';
+const databaseConfig = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+      rejectUnauthorized: false
+  }
+}
 
-const connection = new Pool({
-  user,
-  password,
-  host,
-  port,
-  database
-});
+const connection = new Pool(databaseConfig);
 
 export default connection

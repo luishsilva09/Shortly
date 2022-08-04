@@ -1,6 +1,8 @@
+import connection from "../dbStrategy/postgres.js";
 export async function signup(req,res){
     try{
-        res.send('signup')
+        let teste = await connection.query('SELECT * FROM users')
+        res.send(teste)
     }catch (error) {
         console.log(error);
         res.sendStatus(500);
