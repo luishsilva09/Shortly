@@ -29,8 +29,7 @@ export async function openUrl(req,res){
         }
         await connection.query(`UPDATE shortlys SET "visitCount" = $1 WHERE shortlys."shortUrl" = $2`,
         [(data.rows[0].visitCount + 1), shortUrl])
-        res.send(data.rows[0])
-        //res.redirect(data.rows[0].url)
+        res.redirect(data.rows[0].url)
     }catch (error) {
         console.log(error);
         res.sendStatus(500);
