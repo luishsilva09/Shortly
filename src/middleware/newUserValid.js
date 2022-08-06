@@ -1,5 +1,3 @@
-import joi from 'joi';
-import connection from '../dbStrategy/postgres.js';
 import { authRepository } from '../repository/authRepository.js';
 import {validUserSchema} from '../schemas/validUserSchema.js'
 

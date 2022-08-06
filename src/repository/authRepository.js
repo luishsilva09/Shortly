@@ -5,7 +5,7 @@ async function signUp(name,email,cryptPassword){
     [name,email,cryptPassword])
 }
 async function signIn(id,token){
-    await connection.query(`INSERT INTO sessions("userId","token") VALUES($1,$2)`,
+   return await connection.query(`INSERT INTO sessions("userId","token") VALUES($1,$2)`,
         [id,token])
 }
 

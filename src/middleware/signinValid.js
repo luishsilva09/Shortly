@@ -1,17 +1,16 @@
-import joi from 'joi';
-import connection from '../dbStrategy/postgres.js';
+import { authRepository } from '../repository/authRepository.js';
 import { loginValidSchema } from '../schemas/validUserSchema.js';
 
 export async function signinValid(req,res,next){
     const userData = req.body
     const {error} = loginValidSchema.validate(userData)
 
-    const existUser =await connection.query(`SELECT * FROM users WHERE users.email =$1`,[userData.email])
+    const existUser = await authRepository.existUser(userData.email)
     if(existUser.rowCount === 0){
-        return res.sendStatus(401)
+        return res.status(401).send("Email ou senha inválidos")
     }
     if(error){
-        return res.sendStatus(422)
+        return res.status(422).send(error.details)
     }
     res.locals.user = existUser.rows
     next()
