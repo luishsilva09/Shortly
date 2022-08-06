@@ -5,9 +5,16 @@ async function addShortUrl(shortUrl,url,userId){
     [shortUrl,url,userId,0])
 }
 
-async function findShortUrl(){
-    
+async function findShortUrl(urlId){
+    return await connection.query(`SELECT * FROM shortlys WHERE shortlys.id = $1`,
+    [urlId ])
+}
+
+async function deleteUrl(urlId){
+    return await connection.query(`DELETE FROM shortlys WHERE id = $1`,[urlId])
 }
 export const addDeleteUrlsRepository = {
-addShortUrl
+    addShortUrl,
+    findShortUrl,
+    deleteUrl
 }
