@@ -1,15 +1,16 @@
 import joi from 'joi';
 import connection from '../dbStrategy/postgres.js';
+import { authRepository } from '../repository/authRepository.js';
 import {validUserSchema} from '../schemas/validUserSchema.js'
 
 export async function newUserValid(req,res,next){
     const newUser = req.body
-    const {error} = validUserSchema.validate(newUser)
+    const {error} = validUserSchema.validate(newUser,{abortEarly:false})
     if(error){
-        return res.sendStatus(422)
+        return res.status(422).send(error.details)
     }
-    const {rowCount: existUser} =await connection.query(`SELECT * FROM users WHERE users.email =$1`,[newUser.email])
-    if(existUser > 0){
+    const existUser = authRepository.existUser(newUser.email)
+    if((await existUser).rowCount > 0){
         return res.sendStatus(409)
     }
     next()

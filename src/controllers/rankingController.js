@@ -9,7 +9,7 @@ export async function ranking(req,res){
         ORDER BY "visitCount" DESC
         LIMIT 10
         `)
-        res.send(data.rows)
+        res.status(200).send(data.rows)
     }catch (error) {
         console.log(error);
         res.sendStatus(500);
