@@ -1,18 +1,16 @@
 import connection from "../dbStrategy/postgres.js";
 import { nanoid } from 'nanoid'
+import { addDeleteUrlsRepository } from "../repository/addDeleteUrlsRepository.js";
 
 export async function addShortUrl(req,res){
     try{
         const {rows: session} = res.locals.session
         let {url}= req.body
-        url = await nanoid(8)
-       await connection.query(`INSERT INTO shortlys("shortUrl","url","userId","visitCount") VALUES ($1,$2,$3,$4)`,
-        [url,req.body.url,session[0].userId,0])
-
+        url = nanoid(8)
+        await addDeleteUrlsRepository.addShortUrl(url,req.body.url,session[0].userId)
         const body = {
             shortUrl: url
         }
-
         res.status(201).send(body)
     }catch (error) {
         console.log(error);

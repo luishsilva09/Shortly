@@ -1,9 +1,8 @@
-import connection from "../dbStrategy/postgres.js";
+import { getUrlsRepository } from "../repository/getUrlsrepository.js";
 export async function listUrl(req,res){
     try{
         const urlId = parseInt(req.params.id)
-        const data = await connection.query(`SELECT * FROM shortlys WHERE shortlys.id = $1`,
-        [urlId])
+        const data = await getUrlsRepository.getUrl(urlId)
         let shortData = {...data.rows}
         if(data.rowCount === 0){
             return res.sendStatus(404)
@@ -23,12 +22,11 @@ export async function listUrl(req,res){
 export async function openUrl(req,res){
     try{
         const shortUrl = req.params.shortUrl;
-        const data= await connection.query(`SELECT * FROM shortlys WHERE shortlys."shortUrl" = $1`,[shortUrl])
+        const data= await getUrlsRepository.openUrl(shortUrl)
         if(data.rowCount === 0){
             return res.sendStatus(404)
         }
-        await connection.query(`UPDATE shortlys SET "visitCount" = $1 WHERE shortlys."shortUrl" = $2`,
-        [(data.rows[0].visitCount + 1), shortUrl])
+        await getUrlsRepository.updateVisits(data,shortUrl)
         res.redirect(data.rows[0].url)
     }catch (error) {
         console.log(error);
