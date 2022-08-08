@@ -5,7 +5,7 @@ async function findUser(userId){
 }
 async function userData(userId){
     return await connection.query(`
-    SELECT users.id,users.name ,SUM(shortlys."visitCount") AS "visitCount" FROM users 
+    SELECT users.id,users.name ,SUM(shortlys."visitCount")::int AS "visitCount" FROM users 
     JOIN shortlys ON users.id = shortlys."userId"
     WHERE users.id= $1
     GROUP BY users.id
