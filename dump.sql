@@ -74,7 +74,7 @@ CREATE TABLE public.shortlys (
     "shortUrl" text NOT NULL,
     url text NOT NULL,
     "userId" integer NOT NULL,
-    "visitCount" integer NOT NULL,
+    "visitCount" integer DEFAULT 0 NOT NULL,
     "createAt" timestamp without time zone DEFAULT now()
 );
 
@@ -166,10 +166,9 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 COPY public.sessions (id, "userId", token, "createAt") FROM stdin;
-1	2	885324c5-7a01-488c-ae92-1a28f8044ee9	2022-08-04 18:40:53.04094
-2	1	e3cd7733-a886-4280-ada2-7bc489f01a37	2022-08-05 17:08:49.714161
-35	3	cec8d22b-2461-4421-acc5-30568a17442c	2022-08-06 22:39:30.376431
-36	3	62b39f27-a906-4a7f-98e2-d23ea291e419	2022-08-06 22:40:24.490626
+1	1	edbe5381-62ff-463f-a64c-eb7099b17bf9	2022-08-08 15:03:03.032132
+2	2	8d2c354d-97d7-4bc2-919c-3ee6ea843a6c	2022-08-08 15:03:29.38108
+3	3	66cb670f-686d-404f-97a0-fc383624de02	2022-08-08 15:03:44.672643
 \.
 
 
@@ -178,17 +177,13 @@ COPY public.sessions (id, "userId", token, "createAt") FROM stdin;
 --
 
 COPY public.shortlys (id, "shortUrl", url, "userId", "visitCount", "createAt") FROM stdin;
-4	Z_Mu610a	https://www.google.com	2	0	2022-08-04 23:59:55.06035
-3	mACmU24Z	https://www.notion.so/Projeto-Shortly-API-fe5c5d7793cc422cab739a7b9bf3c259	2	3	2022-08-04 23:28:08.132334
-5	NVJdJH7c	https://google.com	2	0	2022-08-05 17:10:11.309497
-6	iW7Xu0lU	https://google.com	1	0	2022-08-05 17:10:27.007942
-8	r3Gwpmaq	https://google.com	1	0	2022-08-05 17:10:30.000396
-9	0SQJHAmN	https://google.com	1	0	2022-08-05 17:14:18.211838
-10	JAKpbHII	https://google.com	1	0	2022-08-05 17:14:20.586025
-42	RupK3xX8	https://www.youtube.com/watch?v=jfKfPfyJRdk	1	0	2022-08-06 22:50:52.753671
-45	UXLMdSja	https://www.youtube.com/watch?v=jfKfPfyJRdk	3	1	2022-08-06 22:58:04.837948
-44	hnvI_EJH	https://www.youtube.com/watch?v=jfKfPfyJRdk	3	1	2022-08-06 22:58:03.273858
-7	DBhY8xV5	https://google.com	1	6	2022-08-05 17:10:28.5643
+1	ah7Fii8z	https://...	1	0	2022-08-08 15:22:09.665221
+2	mysI3FAc	https://...	1	0	2022-08-08 15:22:11.547105
+3	U1SvnQz5	https://...	1	0	2022-08-08 15:22:12.403121
+4	Vg8IZbI1	https://...	1	0	2022-08-08 15:22:13.152596
+5	TQzJtqfz	https://...	1	0	2022-08-08 15:22:13.937761
+6	vdKATtkN	https://...	1	0	2022-08-08 15:22:14.688043
+7	77W9Wmc7	https://...	1	4	2022-08-08 15:22:46.603613
 \.
 
 
@@ -197,11 +192,9 @@ COPY public.shortlys (id, "shortUrl", url, "userId", "visitCount", "createAt") F
 --
 
 COPY public.users (id, name, email, password, "createAt") FROM stdin;
-1	João	joao@driven.com.br	$2b$10$RIPryyThkXICbiB94Gs/9e0LEENf7uXYBvJ.5GRToDlMsE3RjBFs.	2022-08-04 18:05:06.108106
-2	luis	luis@driven.com.br	$2b$10$5jzGy5aH6czdueOI6bSt6eC2wDBM0PLUzbdvFSC6td6/S3oTcG5Zu	2022-08-04 18:07:06.103547
-3	João	joao@driven.com	$2b$10$ze86Wa2rl/h74svNLEEOIeWXqwXq1QkgL8JspYhF2uvZqO6dTiAv6	2022-08-06 22:14:06.398797
-4	teste	teste@gmail.com	$2b$10$5XcPka2CT42TnAuPtEmJiuilb6R82V.I7ES4XerCw9ElEwAankPKO	2022-08-06 22:24:31.714049
-6	teste	teste2@gmail.com	$2b$10$PBNrN5WWSZbrmXQxZdzWn.mUHNtasM42ji1RtRZqkXKLTqgIr4CYK	2022-08-06 22:28:02.010425
+1	João	joao@driven.com.br	$2b$10$eV73SRwK7rwL9M5IiaCCae.8dTkHBMfXuaKXWw.MQxpx.I10Flrea	2022-08-08 15:01:17.640909
+2	luis	luis@driven.com.br	$2b$10$HeD3CD1E6NXrhbcLoV3UtuoGPwSnZVSHmP7FP6jwL38UekPS5FnX2	2022-08-08 15:01:34.955549
+3	teste	teste@driven.com.br	$2b$10$b2PEL/KgAWfSt4JsAxwAJu1phHKapz.FaVZZqiv7X.CMYETQD1sWm	2022-08-08 15:01:44.391122
 \.
 
 
@@ -209,21 +202,21 @@ COPY public.users (id, name, email, password, "createAt") FROM stdin;
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rxhcdanplnoosy
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 36, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 3, true);
 
 
 --
 -- Name: shortlys_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rxhcdanplnoosy
 --
 
-SELECT pg_catalog.setval('public.shortlys_id_seq', 45, true);
+SELECT pg_catalog.setval('public.shortlys_id_seq', 7, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rxhcdanplnoosy
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 6, true);
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 
 --
@@ -279,16 +272,6 @@ ALTER TABLE ONLY public.shortlys
 --
 
 GRANT USAGE ON SCHEMA heroku_ext TO rxhcdanplnoosy;
-
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: rxhcdanplnoosy
---
-
-REVOKE ALL ON SCHEMA public FROM postgres;
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO rxhcdanplnoosy;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
